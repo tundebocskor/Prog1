@@ -39,12 +39,11 @@ int n_points = 400;
 	int xlength= xmax-40;
 	int ylength= ymax-40;
 	int xscale=30, yscale=30;
-//olyan tipusu függvényt vár, ami double értéket ad vissza a ONE
+
 	Function s (one, rmin, rmax, origo, n_points, xscale, yscale );
 	Function r (square, rmin, rmax, origo, n_points, xscale, yscale );
 	//Lokálisan adjuk meg a függvényt a következőbe 
-	Function cos_func ( [] (double x) {return cos(x); }
-						 , rmin, rmax, origo, n_points, xscale, yscale );
+	Function cos_func ( [] (double x) {return cos(x); }, rmin, rmax, origo, n_points, xscale, yscale );
 
 
 	Rectangle ri {Point{200,200}, 100, 50};
