@@ -32,10 +32,7 @@ for(double d; ifs >>d;){
 print(vd);
 std::vector<int> vi(vd.size());
 
-/*for(auto& i:vd){
-	vi.push_back(i); //push_back el uj helyeket foglal menet közben 
-	//ami valamennyire költséges 
-}*/ //Vagy ezt vagy a vd size ot használom
+}
 
 
 	std::copy(vd.begin(), vd.end(), vi.begin()),
