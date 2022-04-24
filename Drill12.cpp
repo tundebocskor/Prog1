@@ -1,83 +1,79 @@
 #include "Simple_window.h"
 	#include "Graph.h"
- 
- double one(double) {return 1; }
-
- double square(double x) {return x*x; }
-int main()
+ int main()
 {
 
 	using namespace Graph_lib;
 
-	//Point t1{100, 100}; //hol fog kezdődni kirajzolódni 
-	//Simple_window win {t1, 640, 600, "Canvas"};  //egy pont meg egy méret 
-
-	// Háromszög kirajzolása
-	/*Polygon poly;
-
-	poly.add(Point{300,200});
-	poly.add(Point{350,100});
-	poly.add(Point{400,200});	
-
-	win.attach(poly);*/
+	
 	int xmax=600;
 	int ymax=400 ;
-
-	int x_orig =xmax/2;
-	int y_orig=ymax/2;
 	
-	
-int rmin = -9; 
-int rmax = 9;
 //mettől meddig rajzolja ki 
+// Y koordináták lefelé növekszenek ... 
 
-int n_points = 400;
 	Simple_window win {Point{100,100}, xmax, ymax, "Canvas"}; 
 
-	Point origo(x_orig, y_orig);
+	Axis xa {Axis::x, Point{20,300}, 500, 10, "x axis"};  
+	Axis ya {Axis::y, Point{20,300}, 250, 10, "y axis"};
+	ya.set_color(Color::yellow);                       // choose a color
+	ya.label.set_color(Color::dark_red); 
+	win.attach(xa);                       // attach xa to the window, win
+	win.attach(ya);
+	//win.set_label("Canvas #5");
+	//win.wait_for_button();
 
-	int xlength= xmax-40;
-	int ylength= ymax-40;
-	int xscale=30, yscale=30;
-
-	Function s (one, rmin, rmax, origo, n_points, xscale, yscale );
-	Function r (square, rmin, rmax, origo, n_points, xscale, yscale );
-	//Lokálisan adjuk meg a függvényt a következőbe 
-	Function cos_func ( [] (double x) {return cos(x); }, rmin, rmax, origo, n_points, xscale, yscale );
-
-
-	Rectangle ri {Point{200,200}, 100, 50};
-	ri.set_fill_color(Color::green);
+	Rectangle ri {Point{300,50}, 80, 50}; //téglalap
+	ri.set_fill_color(Color::cyan);
 	// Stílusát megváltoztatjuk
-
-	ri.set_style(Line_style(Line_style::dot, 4));
-
+	ri.set_style(Line_style(Line_style::dashdot, 2));
+	ri.set_fill_color(Color::yellow);
+	Function sine {sin,0,100,Point{20,280},1000,10,10};       // sine függvény
+          //   // ábrázolja a sin()-t a [0:100) tartományban (0,0) a (20,280) értékkel
+          // 1000 pont felhasználásával, annyi pontot rajzol ki ; scale x values *10, scale y values *10
+	sine.set_color(Color::blue);
 	//Szöveg kiiratása
-	Text t {Point{x_orig+90, y_orig-130}, "Helllo"};
+	Text t {Point{150,150}, "Hello, graphical world!"};
+
 	t.set_font(Font::times_bold);
 	t.set_font_size(20);
 
-	Image ii {Point{10, 10}, "badge.jpg"};
+	Image ii {Point{30, 55}, "image.jpeg"};
 
-	Circle c {Point {xmax-120, xmax-300}, 50};
+
+	Circle c {Point{300,200},50};
+	Ellipse e {Point{300,200}, 75,25};
+	e.set_color(Color::dark_red);
+	Mark m {Point{100,200},'x'};
+	ostringstream oss;
+	oss << "; window size: " << win.x_max() << "*" << win.y_max();
+	Text sizes {Point{100,20},oss.str()};
+
 	Polygon poly;
 
-	poly.add(Point{500,200});
-	poly.add(Point{550,100});
-	poly.add(Point{600,200});	
-	poly.set_fill_color(Color::blue);
-	c.set_fill_color(Color::red);
-	Axis x{Axis::x, Point{20,y_orig}, xlength, xlength/xscale, "x"};
-	Axis y{Axis::y, Point{x_orig, ylength + 20}, ylength, ylength/yscale, "y"};
+	poly.add(Point{350,200});
+	poly.add(Point{400,100});
+	poly.add(Point{450,200});	
+	poly.set_fill_color(Color::blue); //színt adunk neki 
+
+	Closed_polyline poly_rect;
+	poly_rect.add(Point{450,50});
+	poly_rect.add(Point{500,50});
+	poly_rect.add(Point{500,100});
+	poly_rect.add(Point{450,100});
+	poly_rect.add(Point{400,75});
+
+
+
 	win.attach(ii);
 	win.attach(c);
-	win.attach(x);
-	win.attach(y);
-	win.attach(s);
-	win.attach(r);
-	win.attach(cos_func);
+	win.attach(e);
+	win.attach(sine);
+	win.attach(poly_rect);
+	win.attach(m);
+	win.attach(sizes);
 	win.attach(ri);
-	win.attach(t);
+
 	win.attach(poly);
 
 
